@@ -1,15 +1,13 @@
 class Vastimg
-  def initialize(options = {})
-    # @redis = redis
-    # @googleanalytics = googleanalytics
+  def initialize(redis=$redis)
+    @redis = redis
     add 'http://thechive.files.wordpress.com/2010/11/oprah-bees.gif'
-    add 'http://0.media.collegehumor.cvcdn.com/62/46/cefeebdd838f92b7d8967eb854eb7bb1.gif'
   end
 
   def call(env)
     url = scrub(env['QUERY_STRING'])
     method = env['REQUEST_METHOD'].downcase
-    if %[get].include?(method)
+    if %[get delete].include?(method)
       send(method, url, env)
     else
       [405, {}, []]
@@ -18,12 +16,8 @@ class Vastimg
 
   def get(url, env)
     case url
-
     when /^(https?|data):/
-      # remember the url
       add url
-
-      # give the people what they want
       if env['HTTP_USER_AGENT'] =~ /(Propane|Echofon)/
         [302, {'Location' => url}, []]
       else
@@ -37,13 +31,38 @@ class Vastimg
         ]
       end
     else
-      [302, {'Location' => "/"}, []]
+      [302, {'Location' => "/?#{random}"}, []]
+    end
+  end
+
+  def delete(url, env)
+    if admin?(env)
+      @redis.srem('master', url)
+      [200, {}, []]
+    else
+      [403, {}, []]
     end
   end
 
   def add(url)
-    # @redis.sadd('master', url)
-    # @googleanalytics
+    @redis.sadd('master', url)
+  end
+
+  def random
+    @redis.srandmember('master')
+  end
+
+  def admin?(env)
+    cookies(env)['token'] == ENV['VASTIMG_ADMIN_TOKEN']
+  end
+
+  def cookies(env)
+    hash = {}
+    env['HTTP_COOKIE'].to_s.split(/; */).each do |cookie|
+      key, value = cookie.split('=', 2)
+      hash[key] = value
+    end
+    hash
   end
 
   def scrub(str)

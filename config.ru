@@ -1,13 +1,13 @@
 root = File.dirname(__FILE__)
 $:.unshift(root)
 
-# configure redis
-require 'uri'
-require 'redis'
-url = URI.parse(ENV['REDIS_URL'] || 'redis://localhost:6379')
-redis = Redis.new(:host => url.host, :port => url.port, :password => url.password)
-warn "redis on #{[url.host, url.port].compact.join(':')}"
+# some options I guess, people seem to like those
+options = {:opt1 => 'foo', :opt2 => 'bar'}
+
+# serve some assets
+use Rack::Static, :urls => ["/style.css", "/vastimg.bundled.js"], :root => "public"
 
 # bring in the app
 require 'vastimg'
-run Vastimg.new(redis)
+run Vastimg.new(options)
+

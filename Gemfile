@@ -1,4 +1,5 @@
-source 'http://rubygems.org'
-gem 'rack'
-gem 'thin'
-gem 'redis'
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'unicorn'
+gem 'pry'

@@ -1,1 +1,1 @@
-web: thin -p $PORT start
+web: thin -p 5000 start

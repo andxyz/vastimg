@@ -1,0 +1,17 @@
+{
+  "name": "vastimg",
+  "version": "1.0.1",
+  "description": "http://github.com/andxyz/vastimg",
+  "homepage": "https://github.com/andxyz/vastimg",
+  "author": "andxyz",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "dgram-browserify": "~0.0.13",
+    "buffer-browserify": "~0.2.2",
+    "browserify": "~4.1.5"
+  }
+}

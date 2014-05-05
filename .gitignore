@@ -1,0 +1,8 @@
+# project
+/public
+
+# ruby
+/vendor
+
+# node
+/node_modules
