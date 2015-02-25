@@ -13,5 +13,8 @@
     "dgram-browserify": "~0.0.13",
     "buffer-browserify": "~0.2.2",
     "browserify": "~4.1.5"
+  },
+  "dependencies": {
+    "jquery-browserify": "^1.8.1"
   }
 }

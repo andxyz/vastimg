@@ -9,16 +9,16 @@
 var jQuery = require('jquery-browserify');
 
 (function($) {
-  var App = {},
-  App.keyboard = {},
-  App.keyboard.spacebar     = 32,
-  App.keyboard.arrowleft    = 37,
-  App.keyboard.arrowup      = 38,
-  App.keyboard.arrowright   = 39,
-  App.keyboard.arrowdown    = 40,
-  App.keyboard.backspace    = 8,
-  App.keyboard.enter        = 13,
-  App.keyboard.esc          = 27,
+  var App = {};
+  App.keyboard = {};
+  App.keyboard.spacebar     = 32;
+  App.keyboard.arrowleft    = 37;
+  App.keyboard.arrowup      = 38;
+  App.keyboard.arrowright   = 39;
+  App.keyboard.arrowdown    = 40;
+  App.keyboard.backspace    = 8;
+  App.keyboard.enter        = 13;
+  App.keyboard.esc          = 27;
   App.keyboard.questionmark = 191;
 
   var query = document.location.search,
@@ -27,23 +27,26 @@ var jQuery = require('jquery-browserify');
        form = $('form'),
       input = $('input'),
        help = $('div'),
-        log = function(){console && console.log.apply(console, arguments)}
+        log = function(){console && console.log.apply(console, arguments); }
 
-  img.attr('src', src)
-  form.submit(function () { log('canceling submit'); return false })
+  img.attr('src', src);
+  form.submit(function () { log('canceling submit'); return false; });
 
   /* listen/unlisten for top-level keyboard events */
-  function listen (func) {
-    func = func || key
-    document.onkeydown =
-      function (ev) { return func(ev.keyCode) }
+  function listen(func) {
+    func = func || key;
+    document.onkeydown = function (ev) {
+      return func(ev.keyCode);
+    }
   }
-  function unlisten () { document.onkeydown = null }
+  function unlisten() {
+    document.onkeydown = null;
+  }
 
   /** process keyCode value
   * http://www.javascripter.net/faq/keycodes.htm
   */
-  function key (code) {
+  function key(code) {
     if (code === App.keyboard.spacebar || (code >= App.keyboard.arrowleft && code <= App.keyboard.arrowdown)) {
       // unlisten()
       // location.href = '/'
@@ -77,11 +80,11 @@ var jQuery = require('jquery-browserify');
   function check() {
     var value = input.val();
     if (value !== src) {
-      unlisten()
-      input.hide()
+      unlisten();
+      input.hide();
       if (!receive(value)) {
-        log('bzzt: ' + value)
-        activateInput()
+        log('bzzt: ' + value);
+        activateInput();
       }
       return
     }
@@ -93,19 +96,19 @@ var jQuery = require('jquery-browserify');
     }
 
     if (input[0].selectionStart > 0 || input[0].selectionEnd < src.length) {
-      log("paste target lost selection")
-      input.select()
+      log("paste target lost selection");
+      input.select();
     }
 
-    setTimeout(check, 100)
+    setTimeout(check, 100);
   }
 
   /* detect URLs in input */
   function receive(text) {
-    var url = text.trim(), match
+    var url = text.trim(), match;
     if (url.match(/^(?:https?|data):/)) {
       if (match = url.match(/^https?:\/\/vastimg\.herokuapp\.com\/\?(.*)/)) {
-        url = match[1]
+        url = match[1];
       }
       preview(url);
       return url;
@@ -113,29 +116,30 @@ var jQuery = require('jquery-browserify');
   }
 
   /* preview pasted image */
-  var previewImg = $(document.createElement("img")),
-              ok = $(document.createElement("a"))
-  ok.text("SHIP IT")
+  var previewImg = $(document.createElement("img"));
+  var ok = $(document.createElement("a"));
+  ok.text("SHIP IT");
+
   function preview(url) {
-    var href = "/?" + url
-    log("preview: " + url)
+    var href = "/?" + url;
+    log("preview: " + url);
 
     if (help.css('opacity') > 0.0) {
-      help.css('opacity', 0.0)
+      help.css('opacity', 0.0);
     }
 
-    previewImg.attr('src', url)
-    form.append(previewImg)
+    previewImg.attr('src', url);
+    form.append(previewImg);
 
-    ok.attr('href', href)
-    form.append(ok)
+    ok.attr('href', href);
+    form.append(ok);
 
-    img.css('opacity',  0.3)
-    form.css('opacity', 0.9)
+    img.css('opacity',  0.3);
+    form.css('opacity', 0.9);
 
     listen(function (code) {
       if (code === App.keyboard.spacebar || code === App.keyboard.enter) {
-        document.location = href
+        document.location = href;
       } else if (code === App.keyboard.esc) {
         dismiss();
       }
@@ -143,10 +147,12 @@ var jQuery = require('jquery-browserify');
   }
 
   function dismiss() {
-    activateInput()
-    img.css('opacity',  1.0)
-    form.css('opacity', 0.0)
-    setTimeout(function () { form.find("img", "a").remove() }, 200)
+    activateInput();
+    img.css('opacity',  1.0);
+    form.css('opacity', 0.0);
+    setTimeout(function () {
+      form.find("img", "a").remove();
+    }, 200)
   }
 
 })(jQuery);

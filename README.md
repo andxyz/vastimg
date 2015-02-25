@@ -13,21 +13,24 @@ we added dgram for udp packet sending client side
 sidenote: we removed your zen and filled this app with crap
 
 ```bash
-    npm install
-    bundle install
-    lessc style.less style.css
-    browserify vastimg.js > vastimg.bundled.js
+nvm use `cat .node-version`
+npm install -g lessc
+npm install -g browserify
+npm install
+bundle install
+lessc style.less style.css
+browserify vastimg.js > vastimg.bundled.js
 ```
 
 ## Dear serveradmin,
 
 
 ```zsh
-    ssh merehuman@vastimg.andxyz.com
-    cd /www/
-    git clone https://github.com/andxyz/vastimg.git vastimg
-    cd vastimg/
-    PATH=$PATH:./bin/ foreman start
+ssh merehuman@vastimg.andxyz.com
+cd /www/
+git clone https://github.com/andxyz/vastimg.git vastimg
+cd vastimg/
+PATH=$PATH:./bin/ foreman start
 ```
 
 ## example usage once it's running
