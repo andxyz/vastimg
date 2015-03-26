@@ -1,1 +1,1 @@
-web: thin -p 5000 start
+web: thin -a 0.0.0.0 -p 5000 start

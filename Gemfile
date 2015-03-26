@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'sinatra'
-gem 'unicorn'
 gem 'pry'
+gem 'sinatra'
+gem 'thin'
+gem 'foreman'
+gem 'unicorn'
