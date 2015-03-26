@@ -1,11 +1,3 @@
-// var dgram = require('dgram');
-// var Buffer = require('buffer').Buffer;
-// var socket = dgram.createSocket('udp4');
-
-/* some example code */
-// var hello = new Buffer('hello');
-// socket.send(hello, 0, hello.length, 3000, 'andxyz.com');
-
 var jQuery = require('jquery-browserify');
 
 (function($) {
